@@ -36,14 +36,12 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 .inp-sm{padding:.45rem .7rem;font-size:.82rem;border-radius:.6rem;}
 input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;}
 input[type=number]{-moz-appearance:textfield;}
-select.inp{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2355556e' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .75rem center;padding-right:2rem;}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;padding:.6rem 1.2rem;border-radius:.75rem;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.85rem;border:none;cursor:pointer;transition:all .2s;white-space:nowrap;}
-.btn:active{transform:scale(.96);}
-.btn-p{background:var(--accent);color:#070710;}.btn-p:hover{filter:brightness(1.1);box-shadow:0 0 20px var(--accent-d);}
-.btn-s{background:transparent;border:1px solid var(--border);color:var(--fg);}.btn-s:hover{border-color:var(--muted);background:rgba(128,128,128,.04);}
-.btn-d{background:var(--danger);color:#fff;}.btn-d:hover{filter:brightness(1.15);}
-.btn-g{background:transparent;color:var(--muted);padding:.45rem;}.btn-g:hover{color:var(--danger);background:var(--danger-d);}
-.btn-sm{padding:.35rem .7rem;font-size:.78rem;}
+select.inp{cursor:pointer;appearance:none;-webkit-appearance:none;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2355556e' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+background-repeat:no-repeat;background-position:right .75rem center;
+padding-right:2rem;background-color:rgba(128,128,128,.07);color:var(--fg);}
+select.inp option{background-color:#0f0f16;color:#e8e8ef;padding:.5rem;}
+[data-theme="light"] select.inp option{background-color:#ffffff;color:#1a1a18;}
 .timer-bg{stroke:var(--border);transition:stroke .5s;}
 .timer-prog{stroke:var(--accent);transition:stroke .5s,stroke-dashoffset .4s linear;}
 .timer-prog.brk{stroke:var(--brk);}
@@ -111,13 +109,10 @@ select.inp{cursor:pointer;appearance:none;background-image:url("data:image/svg+x
 <div id="toast-box"></div>
 <div id="storage-warn" class="storage-warn" style="display:none"><i class="fa-solid fa-database mr-1"></i> Modo memória — dados não persistirão após recarregar</div>
 
-<!-- ===== AUTH ===== -->
 <div id="page-auth" class="z1 min-h-screen flex items-center justify-center px-4 py-8">
 <div class="card p-8 w-full max-w-md auth-anim">
     <div class="text-center mb-7">
-        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-3" style="background:var(--accent-d)">
-            <i class="fa-solid fa-crosshairs text-xl" style="color:var(--accent)"></i>
-        </div>
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-3" style="background:var(--accent-d)"><i class="fa-solid fa-crosshairs text-xl" style="color:var(--accent)"></i></div>
         <h1 class="font-display text-2xl font-bold tracking-tight">FocusFlow</h1>
         <p class="text-sm mt-1" style="color:var(--muted)">Foco inteligente para seus estudos</p>
     </div>
@@ -159,7 +154,6 @@ select.inp{cursor:pointer;appearance:none;background-image:url("data:image/svg+x
 </div>
 </div>
 
-<!-- ===== APP ===== -->
 <div id="page-app" class="z1 min-h-screen flex flex-col" style="display:none">
 <header class="pt-6 pb-3 px-4">
     <div class="max-w-5xl mx-auto flex items-center justify-between">
@@ -175,8 +169,6 @@ select.inp{cursor:pointer;appearance:none;background-image:url("data:image/svg+x
 </header>
 <main class="flex-1 px-4 pb-10">
 <div class="max-w-5xl mx-auto space-y-5">
-
-    <!-- Timer -->
     <section class="card p-7 sm:p-9 flex flex-col items-center fade-in">
         <div id="mode-badge" class="mode-badge focus mb-4"><i class="fa-solid fa-bolt" style="font-size:.62rem"></i><span id="mode-text">Foco</span></div>
         <select id="active-skill" class="inp inp-sm mb-5 text-center" style="max-width:220px;margin:0 auto;" onchange="S.setActive(this.value)">
@@ -194,8 +186,6 @@ select.inp{cursor:pointer;appearance:none;background-image:url("data:image/svg+x
             <button class="btn btn-s" onclick="resetTm()"><i class="fa-solid fa-rotate-left" style="font-size:.7rem"></i><span class="hidden sm:inline">Resetar</span></button>
         </div>
     </section>
-
-    <!-- Config + Tarefas -->
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-5">
         <section class="card p-6 lg:col-span-2 fade-in">
             <h2 class="font-display text-base font-semibold mb-5 flex items-center gap-2"><i class="fa-solid fa-sliders text-sm" style="color:var(--muted)"></i> Configurações</h2>
@@ -224,8 +214,6 @@ select.inp{cursor:pointer;appearance:none;background-image:url("data:image/svg+x
             <p id="t-empty" class="text-sm text-center py-8" style="color:var(--muted);display:none">Nenhuma tarefa ainda.</p>
         </section>
     </div>
-
-    <!-- Skills -->
     <section class="card p-6 fade-in">
         <div class="flex items-center justify-between mb-5">
             <h2 class="font-display text-base font-semibold flex items-center gap-2"><i class="fa-solid fa-star text-sm" style="color:var(--muted)"></i> Skills</h2>
@@ -234,8 +222,6 @@ select.inp{cursor:pointer;appearance:none;background-image:url("data:image/svg+x
         <div id="sk-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3"></div>
         <p id="sk-empty" class="text-sm text-center py-6" style="color:var(--muted);display:none">Crie skills para acompanhar seu progresso por matéria.</p>
     </section>
-
-    <!-- Stats -->
     <section class="card p-6 fade-in">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
             <h2 class="font-display text-base font-semibold flex items-center gap-2"><i class="fa-solid fa-chart-simple text-sm" style="color:var(--muted)"></i> Foco nos últimos 7 dias</h2>
@@ -246,13 +232,11 @@ select.inp{cursor:pointer;appearance:none;background-image:url("data:image/svg+x
         </div>
         <div id="st-chart" class="flex items-end justify-between gap-2 sm:gap-3 h-36 sm:h-40 px-1"></div>
     </section>
-
 </div>
 </main>
 <footer class="pb-5 text-center"><p class="text-xs" style="color:var(--muted)">FocusFlow — Seu tempo, seu foco.</p></footer>
 </div>
 
-<!-- ===== MODAL: Skill Add/Edit ===== -->
 <div id="m-skill" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeSkillM()">
 <div class="modal-card">
     <h3 id="m-sk-title" class="font-display text-lg font-semibold mb-4">Nova Skill</h3>
@@ -261,7 +245,6 @@ select.inp{cursor:pointer;appearance:none;background-image:url("data:image/svg+x
 </div>
 </div>
 
-<!-- ===== MODAL: Delete Confirm ===== -->
 <div id="m-del" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeDelM()">
 <div class="modal-card">
     <div class="danger-banner"><i class="fa-solid fa-triangle-exclamation"></i><span>Ação irreversível</span></div>
@@ -279,219 +262,39 @@ select.inp{cursor:pointer;appearance:none;background-image:url("data:image/svg+x
 </div>
 
 <script>
-/* ================================================================
-   ARMAZENAMENTO SEGuro — funciona em iframe sandboxed
-   ================================================================ */
-const Store = {
-    _m: {}, // memória fallback
-    _ok: true,
-    _tested: false,
-    _test() {
-        if (this._tested) return;
-        this._tested = true;
-        try {
-            const k = '__ff_test__';
-            localStorage.setItem(k, '1');
-            localStorage.removeItem(k);
-        } catch(e) { this._ok = false; }
-    },
-    get(k) {
-        this._test();
-        if (this._ok) try { const v = localStorage.getItem(k); if (v !== null) return v; } catch(e) {}
-        return this._m[k] || null;
-    },
-    set(k, v) {
-        this._test();
-        this._m[k] = v;
-        if (this._ok) try { localStorage.setItem(k, v); } catch(e) {}
-    },
-    del(k) {
-        this._test();
-        delete this._m[k];
-        if (this._ok) try { localStorage.removeItem(k); } catch(e) {}
-    }
-};
+const Store={_m:{},_ok:true,_tested:false,_test(){if(this._tested)return;this._tested=true;try{const k='__ff_t__';localStorage.setItem(k,'1');localStorage.removeItem(k);}catch(e){this._ok=false;}},get(k){this._test();if(this._ok)try{const v=localStorage.getItem(k);if(v!==null)return v;}catch(e){}return this._m[k]||null;},set(k,v){this._test();this._m[k]=v;if(this._ok)try{localStorage.setItem(k,v);}catch(e){}},del(k){this._test();delete this._m[k];if(this._ok)try{localStorage.removeItem(k);}catch(e){}}};
 
-/* ================================================================
-   SHA-256 PURO EM JS — fallback quando crypto.subtle indisponível
-   ================================================================ */
-const _K256 = [0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
-0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
-0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
-0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
-0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
-0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
-0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
-0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+const _K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+function _sha(b){const bl=b.length*8,d=b.slice();d.push(0x80);while(d.length%64!==56)d.push(0);d.push(0,0,0,0,(bl>>>24)&0xff,(bl>>>16)&0xff,(bl>>>8)&0xff,bl&0xff);let H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];for(let o=0;o<d.length;o+=64){const W=[];for(let i=0;i<16;i++)W[i]=((d[o+i*4]<<24)|(d[o+i*4+1]<<16)|(d[o+i*4+2]<<8)|d[o+i*4+3])|0;for(let i=16;i<64;i++){const s0=((W[i-15]>>>7)|(W[i-15]<<25))^((W[i-15]>>>18)|(W[i-15]<<14))^(W[i-15]>>>3),s1=((W[i-2]>>>17)|(W[i-2]<<15))^((W[i-2]>>>19)|(W[i-2]<<13))^(W[i-2]>>>10);W[i]=(W[i-16]+s0+W[i-7]+s1)|0;}let a=H[0],bb=H[1],c=H[2],dd=H[3],e=H[4],f=H[5],g=H[6],h=H[7];for(let i=0;i<64;i++){const S1=((e>>>6)|(e<<26))^((e>>>11)|(e<<21))^((e>>>25)|(e<<7)),ch=(e&f)^(~e&g),t1=(h+S1+ch+_K[i]+W[i])|0,S0=((a>>>2)|(a<<30))^((a>>>13)|(a<<19))^((a>>>22)|(a<<10)),maj=(a&bb)^(a&c)^(bb&c);h=g;g=f;f=e;e=(dd+t1)|0;dd=c;c=bb;bb=a;a=(t1+S0+maj)|0;}H[0]=(H[0]+a)|0;H[1]=(H[1]+bb)|0;H[2]=(H[2]+c)|0;H[3]=(H[3]+dd)|0;H[4]=(H[4]+e)|0;H[5]=(H[5]+f)|0;H[6]=(H[6]+g)|0;H[7]=(H[7]+h)|0;}let x='';for(let i=0;i<8;i++)x+=('00000000'+H[i].toString(16)).slice(-8);return x;}
+function _tb(s){const b=[];for(let i=0;i<s.length;i++){const c=s.charCodeAt(i);if(c<128)b.push(c);else if(c<2048){b.push(192|(c>>6),128|(c&63));}else{b.push(224|(c>>12),128|((c>>6)&63),128|(c&63));}}return b;}
+function _hb(h){const b=[];for(let i=0;i<h.length;i+=2)b.push(parseInt(h.substr(i,2),16));return b;}
+function jsHash(pw,salt){let h=_sha(_tb(pw+salt));for(let i=0;i<10000;i++)h=_sha(_hb(h).concat(_tb(salt)));return h;}
 
-function _sha256(bytes) {
-    const bl = bytes.length * 8;
-    const b = bytes.slice();
-    b.push(0x80);
-    while (b.length % 64 !== 56) b.push(0);
-    b.push(0,0,0,0, (bl>>>24)&0xff, (bl>>>16)&0xff, (bl>>>8)&0xff, bl&0xff);
-    let H = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
-    for (let o = 0; o < b.length; o += 64) {
-        const W = [];
-        for (let i = 0; i < 16; i++) W[i] = ((b[o+i*4]<<24)|(b[o+i*4+1]<<16)|(b[o+i*4+2]<<8)|b[o+i*4+3])|0;
-        for (let i = 16; i < 64; i++) {
-            const s0=((W[i-15]>>>7)|(W[i-15]<<25))^((W[i-15]>>>18)|(W[i-15]<<14))^(W[i-15]>>>3);
-            const s1=((W[i-2]>>>17)|(W[i-2]<<15))^((W[i-2]>>>19)|(W[i-2]<<13))^(W[i-2]>>>10);
-            W[i]=(W[i-16]+s0+W[i-7]+s1)|0;
-        }
-        let a=H[0],bb=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
-        for (let i = 0; i < 64; i++) {
-            const S1=((e>>>6)|(e<<26))^((e>>>11)|(e<<21))^((e>>>25)|(e<<7));
-            const ch=(e&f)^(~e&g);
-            const t1=(h+S1+ch+_K256[i]+W[i])|0;
-            const S0=((a>>>2)|(a<<30))^((a>>>13)|(a<<19))^((a>>>22)|(a<<10));
-            const maj=(a&bb)^(a&c)^(bb&c);
-            h=g;g=f;f=e;e=(d+t1)|0;d=c;c=bb;bb=a;a=(t1+S0+maj)|0;
-        }
-        H[0]=(H[0]+a)|0;H[1]=(H[1]+bb)|0;H[2]=(H[2]+c)|0;H[3]=(H[3]+d)|0;
-        H[4]=(H[4]+e)|0;H[5]=(H[5]+f)|0;H[6]=(H[6]+g)|0;H[7]=(H[7]+h)|0;
-    }
-    let hex = '';
-    for (let i = 0; i < 8; i++) hex += ('00000000' + H[i].toString(16)).slice(-8);
-    return hex;
-}
+let _cOK=false;try{_cOK=!!(window.crypto&&window.crypto.subtle);}catch(e){}
+function genSalt(){let a;try{a=new Uint8Array(32);crypto.getRandomValues(a);}catch(e){a=new Uint8Array(32);for(let i=0;i<32;i++)a[i]=(Math.random()*256)|0;}return Array.from(a).map(b=>b.toString(16).padStart(2,'0')).join('');}
+async function hashPw(pw,salt){if(_cOK){try{const e=new TextEncoder(),km=await crypto.subtle.importKey('raw',e.encode(pw),'PBKDF2',false,['deriveBits']),bits=await crypto.subtle.deriveBits({name:'PBKDF2',salt:e.encode(salt),iterations:100000,hash:'SHA-256'},km,256);return Array.from(new Uint8Array(bits)).map(b=>b.toString(16).padStart(2,'0')).join('');}catch(e){}}return jsHash(pw,salt);}
 
-function _toBytes(s) {
-    const b = [];
-    for (let i = 0; i < s.length; i++) { const c=s.charCodeAt(i); if(c<128)b.push(c);else if(c<2048){b.push(192|(c>>6),128|(c&63));}else{b.push(224|(c>>12),128|((c>>6)&63),128|(c&63));} }
-    return b;
-}
-function _hexToBytes(h) { const b=[]; for(let i=0;i<h.length;i+=2)b.push(parseInt(h.substr(i,2),16)); return b; }
+let tS='idle',tM='focus',tR=0,tT=0,tI=null;const CIRC=2*Math.PI*130;
+let cfg={focusMin:25,breakMin:5},tasks=[],daily=[],skills=[],activeSkill='',curUser=null,editSkillId=null,delSkillId=null;
 
-function jsHash(pw, salt) {
-    let h = _sha256(_toBytes(pw + salt));
-    for (let i = 0; i < 10000; i++) h = _sha256(_hexToBytes(h).concat(_toBytes(salt)));
-    return h;
-}
-
-/* ================================================================
-   CRIPTOGRAFIA — tenta Web Crypto, fallback JS
-   ================================================================ */
-let _cryptoOK = false;
-try { _cryptoOK = !!(window.crypto && window.crypto.subtle); } catch(e) {}
-
-function genSalt() {
-    let arr;
-    try { arr = new Uint8Array(32); crypto.getRandomValues(arr); }
-    catch(e) { arr = new Uint8Array(32); for(let i=0;i<32;i++) arr[i]=(Math.random()*256)|0; }
-    return Array.from(arr).map(b=>b.toString(16).padStart(2,'0')).join('');
-}
-
-async function hashPw(pw, salt) {
-    if (_cryptoOK) {
-        try {
-            const enc = new TextEncoder();
-            const km = await crypto.subtle.importKey('raw', enc.encode(pw), 'PBKDF2', false, ['deriveBits']);
-            const bits = await crypto.subtle.deriveBits({name:'PBKDF2',salt:enc.encode(salt),iterations:100000,hash:'SHA-256'}, km, 256);
-            return Array.from(new Uint8Array(bits)).map(b=>b.toString(16).padStart(2,'0')).join('');
-        } catch(e) {}
-    }
-    return jsHash(pw, salt);
-}
-
-/* ================================================================
-   ESTADO
-   ================================================================ */
-let tS='idle', tM='focus', tR=0, tT=0, tI=null;
-const CIRC=2*Math.PI*130;
-let cfg={focusMin:25,breakMin:5}, tasks=[], daily={}, skills=[], activeSkill='', curUser=null, editSkillId=null, delSkillId=null;
-
-/* ================================================================
-   STORAGE POR USUÁRIO
-   ================================================================ */
 function sk(t){return'ff_u_'+curUser+'_'+t;}
 function sp(t){const r=Store.get(sk(t));return r?JSON.parse(r):null;}
 function ss(t,v){Store.set(sk(t),JSON.stringify(v));}
 function getReg(){const r=Store.get('ff_reg');return r?JSON.parse(r):{};}
 function saveReg(r){Store.set('ff_reg',JSON.stringify(r));}
+function loadUser(){const c=sp('cfg');if(c&&typeof c==='object'){if(typeof c.focusMin==='number'&&c.focusMin>=1&&c.focusMin<=120)cfg.focusMin=c.focusMin;if(typeof c.breakMin==='number'&&c.breakMin>=1&&c.breakMin<=60)cfg.breakMin=c.breakMin;}const t=sp('tasks');tasks=Array.isArray(t)?t.filter(x=>x&&typeof x.id==='string'&&typeof x.text==='string'):[];const d=sp('daily');daily=(d&&typeof d==='object'&&!Array.isArray(d))?d:{};const s=sp('skills');skills=Array.isArray(s)?s.filter(x=>x&&typeof x.id==='string'&&typeof x.name==='string'&&typeof x.xp==='number'):[];const a=Store.get(sk('active'));activeSkill=(a&&typeof a==='string')?a:'';}
+function saveTasks(){ss('tasks',tasks);}function saveDaily(){ss('daily',daily);}function saveCfg(){ss('cfg',{focusMin:cfg.focusMin,breakMin:cfg.breakMin});} function saveSkills(){ss('skills',skills);} function saveActive(){Store.set(sk('active'),activeSkill||'');}
 
-function loadUser() {
-    const c=sp('cfg');if(c&&typeof c==='object'){if(typeof c.focusMin==='number'&&c.focusMin>=1&&c.focusMin<=120)cfg.focusMin=c.focusMin;if(typeof c.breakMin==='number'&&c.breakMin>=1&&c.breakMin<=60)cfg.breakMin=c.breakMin;}
-    const t=sp('tasks');tasks=Array.isArray(t)?t.filter(x=>x&&typeof x.id==='string'&&typeof x.text==='string'):[];
-    const d=sp('daily');daily=(d&&typeof d==='object'&&!Array.isArray(d))?d:{};
-    const s=sp('skills');skills=Array.isArray(s)?s.filter(x=>x&&typeof x.id==='string'&&typeof x.name==='string'&&typeof x.xp==='number'):[];
-    const a=Store.get(sk('active'));activeSkill=(a&&typeof a==='string')?a:'';
-}
-function saveTasks(){ss('tasks',tasks);}
-function saveDaily(){ss('daily',daily);}
-function saveCfg(){ss('cfg',{focusMin:cfg.focusMin,breakMin:cfg.breakMin});}
-function saveSkills(){ss('skills',skills);}
-function saveActive(){Store.set(sk('active'),activeSkill||'');}
+async function doRegister(){const u=document.getElementById('r-user'),p=document.getElementById('r-pw'),p2=document.getElementById('r-pw2'),user=u.value.trim().toLowerCase(),pw=p.value,pw2=p2.value;if(!/^[a-z0-9_]{3,30}$/.test(user)){toast('Usuário: 3-30 chars, letras/números/_.','error');u.focus();return;}if(pw.length<6){toast('Senha: mínimo 6 caracteres.','error');p.focus();return;}if(pw!==pw2){toast('Senhas não coincidem.','error');p2.focus();return;}const reg=getReg();if(reg[user]){toast('Usuário já existe.','error');return;}const salt=genSalt(),hash=await hashPw(pw,salt);reg[user]={salt,hash};saveReg(reg);curUser=user;loadUser();enterApp();toast('Conta criada! Bem-vindo(a), '+user+'.','success');}
+async function doLogin(){const u=document.getElementById('l-user'),p=document.getElementById('l-pw'),user=u.value.trim().toLowerCase(),pw=p.value;if(!user){toast('Digite o usuário.','error');u.focus();return;}if(!pw){toast('Digite a senha.','error');p.focus();return;}const reg=getReg();if(!reg[user]){toast('Usuário não encontrado.','error');return;}const hash=await hashPw(pw,reg[user].salt);if(hash!==reg[user].hash){toast('Senha incorreta.','error');return;}curUser=user;loadUser();enterApp();toast('Bem-vindo(a) de volta, '+user+'!','success');}
+function doLogout(){saveTasks();saveDaily();saveCfg();saveSkills();saveActive();clearInterval(tI);tI=null;tS='idle';tM='focus';curUser=null;setTheme('dark');document.getElementById('page-app').style.display='none';document.getElementById('page-auth').style.display='flex';document.getElementById('l-user').value='';document.getElementById('l-pw').value='';}
+function showAuth(w){const tl=document.getElementById('tab-login'),tr=document.getElementById('tab-reg'),fl=document.getElementById('form-login'),fr=document.getElementById('form-reg');if(w==='login'){tl.classList.add('active');tr.classList.remove('active');fl.style.display='block';fr.style.display='none';}else{tr.classList.add('active');tl.classList.remove('active');fr.style.display='block';fl.style.display='none';}}
+function checkSess(){const s=Store.get('ff_sess');if(s){const reg=getReg();if(reg[s]){curUser=s;loadUser();enterApp();return;}}document.getElementById('page-auth').style.display='flex';}
 
-/* ================================================================
-   AUTH
-   ================================================================ */
-async function doRegister(){
-    const u=document.getElementById('r-user'),p=document.getElementById('r-pw'),p2=document.getElementById('r-pw2');
-    const user=u.value.trim().toLowerCase(),pw=p.value,pw2=p2.value;
-    if(!/^[a-z0-9_]{3,30}$/.test(user)){toast('Usuário: 3-30 chars, letras/números/_.','error');u.focus();return;}
-    if(pw.length<6){toast('Senha: mínimo 6 caracteres.','error');p.focus();return;}
-    if(pw!==pw2){toast('Senhas não coincidem.','error');p2.focus();return;}
-    const reg=getReg();if(reg[user]){toast('Usuário já existe.','error');return;}
-    const salt=genSalt(),hash=await hashPw(pw,salt);
-    reg[user]={salt,hash};saveReg(reg);
-    curUser=user;loadUser();enterApp();
-    toast('Conta criada! Bem-vindo(a), '+user+'.','success');
-}
-async function doLogin(){
-    const u=document.getElementById('l-user'),p=document.getElementById('l-pw');
-    const user=u.value.trim().toLowerCase(),pw=p.value;
-    if(!user){toast('Digite o usuário.','error');u.focus();return;}
-    if(!pw){toast('Digite a senha.','error');p.focus();return;}
-    const reg=getReg();if(!reg[user]){toast('Usuário não encontrado.','error');return;}
-    const hash=await hashPw(pw,reg[user].salt);
-    if(hash!==reg[user].hash){toast('Senha incorreta.','error');return;}
-    curUser=user;loadUser();enterApp();
-    toast('Bem-vindo(a) de volta, '+user+'!','success');
-}
-function doLogout(){
-    saveTasks();saveDaily();saveCfg();saveSkills();saveActive();
-    clearInterval(tI);tI=null;tS='idle';tM='focus';
-    curUser=null;setTheme('dark');
-    document.getElementById('page-app').style.display='none';
-    document.getElementById('page-auth').style.display='flex';
-    document.getElementById('l-user').value='';document.getElementById('l-pw').value='';
-}
-function showAuth(w){
-    const tl=document.getElementById('tab-login'),tr=document.getElementById('tab-reg');
-    const fl=document.getElementById('form-login'),fr=document.getElementById('form-reg');
-    if(w==='login'){tl.classList.add('active');tr.classList.remove('active');fl.style.display='block';fr.style.display='none';}
-    else{tr.classList.add('active');tl.classList.remove('active');fr.style.display='block';fl.style.display='none';}
-}
-function checkSess(){
-    const s=Store.get('ff_sess');
-    if(s){const reg=getReg();if(reg[s]){curUser=s;loadUser();enterApp();return;}}
-    document.getElementById('page-auth').style.display='flex';
-}
-
-/* ================================================================
-   TEMA
-   ================================================================ */
 function setTheme(t){document.body.setAttribute('data-theme',t);}
 function applyTmTheme(){if(tS==='idle'){setTheme('dark');return;}setTheme(tM==='break'?'light':'dark');}
+function enterApp(){document.getElementById('page-auth').style.display='none';document.getElementById('page-app').style.display='flex';document.getElementById('u-disp').textContent=curUser;Store.set('ff_sess',curUser);tT=cfg.focusMin*60;tR=tT;renderCfg();renderTimer();renderTasks();renderSkills();renderStats();document.getElementById('storage-warn').style.display=Store._ok?'none':'block';}
 
-/* ================================================================
-   NAVEGAÇÃO
-   ================================================================ */
-function enterApp(){
-    document.getElementById('page-auth').style.display='none';
-    document.getElementById('page-app').style.display='flex';
-    document.getElementById('u-disp').textContent=curUser;
-    Store.set('ff_sess',curUser);
-    tT=cfg.focusMin*60;tR=tT;
-    renderCfg();renderTimer();renderTasks();renderSkills();renderStats();
-    if(!Store._ok) document.getElementById('storage-warn').style.display='block';
-    else document.getElementById('storage-warn').style.display='none';
-}
-
-/* ================================================================
-   UTILS
-   ================================================================ */
 function dk(d){d=d||new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function l7(){const a=[],l=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);a.push({key:dk(d),label:l[d.getDay()],today:i===0});}return a;}
 function ft(s){const m=Math.floor(s/60);return String(m).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
@@ -503,201 +306,39 @@ function updStr(){const pw=document.getElementById('r-pw').value;let sc=0;if(pw.
 function beep(){try{const c=new(window.AudioContext||window.webkitAudioContext)();[0,.18,.36].forEach(d=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=880;o.type='sine';g.gain.setValueAtTime(.2,c.currentTime+d);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+d+.12);o.start(c.currentTime+d);o.stop(c.currentTime+d+.12);});}catch(e){}}
 function toast(msg,type){type=type||'info';const box=document.getElementById('toast-box');while(box.children.length>=3)box.removeChild(box.firstChild);const ic={success:'fa-circle-check',error:'fa-circle-exclamation',info:'fa-circle-info'};const el=document.createElement('div');el.className='toast toast-'+type;el.innerHTML='<i class="fa-solid '+(ic[type]||ic.info)+'"></i><span>'+msg+'</span>';box.appendChild(el);requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.add('show')));setTimeout(()=>{el.classList.remove('show');setTimeout(()=>{if(el.parentNode)el.remove();},400);},3500);}
 
-/* ================================================================
-   TIMER
-   ================================================================ */
 function handleTog(){if(tS==='running')pauseTm();else startTm();}
 function startTm(){if(tS==='running')return;if(tS==='idle'){tM='focus';tT=cfg.focusMin*60;tR=tT;}tS='running';tI=setInterval(tick,1000);renderTimer();applyTmTheme();}
 function pauseTm(){if(tS!=='running')return;tS='paused';clearInterval(tI);tI=null;renderTimer();}
 function resetTm(){clearInterval(tI);tI=null;tS='idle';tM='focus';tT=cfg.focusMin*60;tR=tT;renderTimer();applyTmTheme();}
 function tick(){tR--;if(tR<=0){tR=0;onComplete();return;}renderTimer();}
-function onComplete(){
-    clearInterval(tI);tI=null;beep();
-    if(tM==='focus'){
-        const k=dk();daily[k]=(daily[k]||0)+tT;saveDaily();renderStats();
-        /* Ganhar XP */
-        const xpGain=cfg.focusMin*10;
-        if(activeSkill){
-            const sk=skills.find(s=>s.id===activeSkill);
-            if(sk){sk.xp+=xpGain;saveSkills();renderSkills();
-                toast('+'+xpGain+' XP para '+sk.name+'!','success');}
-            else{toast('+'+xpGain+' XP (skill não encontrada)','info');}
-        }else{toast('Foco concluído! Selecione uma skill para ganhar XP.','info');}
-        tM='break';tT=cfg.breakMin*60;tR=tT;toast('Inicie o descanso.','success');
-    }else{
-        tM='focus';tT=cfg.focusMin*60;tR=tT;toast('Descanso concluído! Pronto para focar.','info');
-    }
-    tS='paused';renderTimer();applyTmTheme();
-}
-function renderTimer(){
-    const d=document.getElementById('timer-display'),l=document.getElementById('timer-label'),
-          bg=document.getElementById('mode-badge'),mt=document.getElementById('mode-text'),
-          pg=document.getElementById('timer-prog'),bt=document.getElementById('btn-tog');
-    d.textContent=ft(tR);
-    l.textContent=tS==='idle'?'Pronto para focar':tS==='running'?(tM==='focus'?'Mantenha o foco...':'Descanse um pouco...'):(tM==='focus'?'Pausado — Foco':'Pausado — Descanso');
-    bg.className='mode-badge '+(tM==='focus'?'focus':'brk');mt.textContent=tM==='focus'?'Foco':'Descanso';
-    bg.querySelector('i').className='fa-solid '+(tM==='focus'?'fa-bolt':'fa-mug-hot');bg.querySelector('i').style.fontSize='.62rem';
-    pg.style.strokeDashoffset=tS==='idle'?CIRC:CIRC*(1-(tT>0?tR/tT:0));
-    pg.classList.toggle('brk',tM==='break');pg.classList.toggle('run',tS==='running');
-    d.style.color=tM==='break'&&tS!=='idle'?'var(--brk)':'var(--fg)';
-    bt.innerHTML=tS==='running'?'<i class="fa-solid fa-pause" style="font-size:.7rem"></i><span>Pausar</span>':'<i class="fa-solid fa-play" style="font-size:.7rem"></i><span>Iniciar</span>';
-    document.title=tS==='running'?ft(tR)+' — FocusFlow':'FocusFlow';
-}
+function onComplete(){clearInterval(tI);tI=null;beep();if(tM==='focus'){const k=dk();daily[k]=(daily[k]||0)+tT;saveDaily();renderStats();const xpGain=cfg.focusMin*10;if(activeSkill){const sk=skills.find(s=>s.id===activeSkill);if(sk){sk.xp+=xpGain;saveSkills();renderSkills();toast('+'+xpGain+' XP para '+sk.name+'!','success');}else toast('+'+xpGain+' XP (skill não encontrada)','info');}else toast('Foco concluído! Selecione uma skill para ganhar XP.','info');tM='break';tT=cfg.breakMin*60;tR=tT;toast('Inicie o descanso.','success');}else{tM='focus';tT=cfg.focusMin*60;tR=tT;toast('Descanso concluído!','info');}tS='paused';renderTimer();applyTmTheme();}
+function renderTimer(){const d=document.getElementById('timer-display'),l=document.getElementById('timer-label'),bg=document.getElementById('mode-badge'),mt=document.getElementById('mode-text'),pg=document.getElementById('timer-prog'),bt=document.getElementById('btn-tog');d.textContent=ft(tR);l.textContent=tS==='idle'?'Pronto para focar':tS==='running'?(tM==='focus'?'Mantenha o foco...':'Descanse um pouco...'):(tM==='focus'?'Pausado — Foco':'Pausado — Descanso');bg.className='mode-badge '+(tM==='focus'?'focus':'brk');mt.textContent=tM==='focus'?'Foco':'Descanso';bg.querySelector('i').className='fa-solid '+(tM==='focus'?'fa-bolt':'fa-mug-hot');bg.querySelector('i').style.fontSize='.62rem';pg.style.strokeDashoffset=tS==='idle'?CIRC:CIRC*(1-(tT>0?tR/tT:0));pg.classList.toggle('brk',tM==='break');pg.classList.toggle('run',tS==='running');d.style.color=tM==='break'&&tS!=='idle'?'var(--brk)':'var(--fg)';bt.innerHTML=tS==='running'?'<i class="fa-solid fa-pause" style="font-size:.7rem"></i><span>Pausar</span>':'<i class="fa-solid fa-play" style="font-size:.7rem"></i><span>Iniciar</span>';document.title=tS==='running'?ft(tR)+' — FocusFlow':'FocusFlow';}
 
-/* ================================================================
-   CONFIG
-   ================================================================ */
-function applyCfg(){
-    const fi=document.getElementById('inp-f'),bi=document.getElementById('inp-b');
-    const fv=parseInt(fi.value,10),bv=parseInt(bi.value,10);
-    if(isNaN(fv)||fv<1||fv>120){toast('Foco: 1-120 min.','error');fi.focus();return;}
-    if(isNaN(bv)||bv<1||bv>60){toast('Descanso: 1-60 min.','error');bi.focus();return;}
-    cfg.focusMin=fv;cfg.breakMin=bv;saveCfg();renderCfg();
-    if(tS==='idle'){tT=cfg.focusMin*60;tR=tT;renderTimer();toast('Configurações aplicadas.','success');}
-    else toast('Salvo! Vigora no próximo ciclo.','info');
-}
-function renderCfg(){
-    document.getElementById('inp-f').value=cfg.focusMin;document.getElementById('inp-b').value=cfg.breakMin;
-    document.getElementById('c-fd').textContent=cfg.focusMin+' min';document.getElementById('c-bd').textContent=cfg.breakMin+' min';
-    document.getElementById('c-td').textContent=(cfg.focusMin+cfg.breakMin)+' min';
-}
+function applyCfg(){const fi=document.getElementById('inp-f'),bi=document.getElementById('inp-b'),fv=parseInt(fi.value,10),bv=parseInt(bi.value,10);if(isNaN(fv)||fv<1||fv>120){toast('Foco: 1-120 min.','error');fi.focus();return;}if(isNaN(bv)||bv<1||bv>60){toast('Descanso: 1-60 min.','error');bi.focus();return;}cfg.focusMin=fv;cfg.breakMin=bv;saveCfg();renderCfg();if(tS==='idle'){tT=cfg.focusMin*60;tR=tT;renderTimer();toast('Configurações aplicadas.','success');}else toast('Salvo! Vigora no próximo ciclo.','info');}
+function renderCfg(){document.getElementById('inp-f').value=cfg.focusMin;document.getElementById('inp-b').value=cfg.breakMin;document.getElementById('c-fd').textContent=cfg.focusMin+' min';document.getElementById('c-bd').textContent=cfg.breakMin+' min';document.getElementById('c-td').textContent=(cfg.focusMin+cfg.breakMin)+' min';}
 
-/* ================================================================
-   SKILLS
-   ================================================================ */
-const S = {
-    getLevel(xp){return Math.max(0,Math.floor(Math.sqrt(xp/100)));},
-    xpFor(lv){return lv*lv*100;},
-    progress(xp){const lv=this.getLevel(xp),cur=this.xpFor(lv),nxt=this.xpFor(lv+1);return nxt>cur?(xp-cur)/(nxt-cur):1;},
-    lvClass(lv){return lv<=2?'lv-low':lv<=5?'lv-mid':lv<=9?'lv-high':'lv-max';},
-    taskCount(id){return tasks.filter(t=>t.skillId===id).length;},
-    setActive(id){activeSkill=id;saveActive();},
-    renderSelect(){
-        const sel=document.getElementById('active-skill');
-        sel.innerHTML='<option value="">Selecione uma skill</option>';
-        skills.forEach(s=>{const o=document.createElement('option');o.value=s.id;o.textContent=s.name+(s.xp>0?' (Lv.'+this.getLevel(s.xp)+')':'');if(s.id===activeSkill)o.selected=true;sel.appendChild(o);});
-    }
-};
+const S={getLevel(xp){return Math.max(0,Math.floor(Math.sqrt(xp/100)));},xpFor(lv){return lv*lv*100;},progress(xp){const lv=this.getLevel(xp),cur=this.xpFor(lv),nxt=this.xpFor(lv+1);return nxt>cur?(xp-cur)/(nxt-cur):1;},lvClass(lv){return lv<=2?'lv-low':lv<=5?'lv-mid':lv<=9?'lv-high':'lv-max';},taskCount(id){return tasks.filter(t=>t.skillId===id).length;},setActive(id){activeSkill=id;saveActive();},renderSelect(){const sel=document.getElementById('active-skill');sel.innerHTML='<option value="">Selecione uma skill</option>';skills.forEach(s=>{const o=document.createElement('option');o.value=s.id;o.textContent=s.name+(s.xp>0?' (Lv.'+this.getLevel(s.xp)+')':'');if(s.id===activeSkill)o.selected=true;sel.appendChild(o);});}};
 
-function openSkillModal(id){
-    editSkillId=id||null;
-    document.getElementById('m-sk-title').textContent=id?'Editar Skill':'Nova Skill';
-    const inp=document.getElementById('m-sk-name');
-    if(id){const s=skills.find(x=>x.id===id);inp.value=s?s.name:'';}else inp.value='';
-    document.getElementById('m-skill').style.display='flex';
-    setTimeout(()=>inp.focus(),100);
-}
+function openSkillModal(id){editSkillId=id||null;document.getElementById('m-sk-title').textContent=id?'Editar Skill':'Nova Skill';const inp=document.getElementById('m-sk-name');if(id){const s=skills.find(x=>x.id===id);inp.value=s?s.name:'';}else inp.value='';document.getElementById('m-skill').style.display='flex';setTimeout(()=>inp.focus(),100);}
 function closeSkillM(){document.getElementById('m-skill').style.display='none';editSkillId=null;}
-function saveSkill(){
-    const inp=document.getElementById('m-sk-name'),name=inp.value.trim();
-    if(!name){toast('Digite o nome da skill.','error');inp.focus();return;}
-    if(editSkillId){
-        const s=skills.find(x=>x.id===editSkillId);
-        if(s){s.name=name;saveSkills();renderSkills();renderTasks();S.renderSelect();toast('Skill atualizada.','success');}
-    }else{
-        skills.push({id:uid(),name,xp:0});saveSkills();renderSkills();S.renderSelect();toast('Skill criada!','success');
-    }
-    closeSkillM();
-}
-function openDelM(id){
-    delSkillId=id;const s=skills.find(x=>x.id===id);if(!s)return;
-    document.getElementById('del-name').textContent='"'+s.name+'"';
-    document.getElementById('del-lv').textContent=S.getLevel(s.xp);
-    document.getElementById('del-xp').textContent=s.xp+' XP';
-    const tc=S.taskCount(id);
-    const el=document.getElementById('del-tasks');el.textContent=tc+(tc===1?' tarefa':' tarefas');
-    el.style.color=tc>0?'var(--warn)':'var(--accent)';
-    document.getElementById('m-del').style.display='flex';
-}
+function saveSkill(){const inp=document.getElementById('m-sk-name'),name=inp.value.trim();if(!name){toast('Digite o nome da skill.','error');inp.focus();return;}if(editSkillId){const s=skills.find(x=>x.id===editSkillId);if(s){s.name=name;saveSkills();renderSkills();renderTasks();S.renderSelect();toast('Skill atualizada.','success');}}else{skills.push({id:uid(),name,xp:0});saveSkills();renderSkills();S.renderSelect();toast('Skill criada!','success');}closeSkillM();}
+function openDelM(id){delSkillId=id;const s=skills.find(x=>x.id===id);if(!s)return;document.getElementById('del-name').textContent='"'+s.name+'"';document.getElementById('del-lv').textContent=S.getLevel(s.xp);document.getElementById('del-xp').textContent=s.xp+' XP';const tc=S.taskCount(id),el=document.getElementById('del-tasks');el.textContent=tc+(tc===1?' tarefa':' tarefas');el.style.color=tc>0?'var(--warn)':'var(--accent)';document.getElementById('m-del').style.display='flex';}
 function closeDelM(){document.getElementById('m-del').style.display='none';delSkillId=null;}
-function execDelSkill(){
-    if(!delSkillId)return;
-    /* Desvincular tarefas */
-    tasks.forEach(t=>{if(t.skillId===delSkillId)t.skillId=null;});
-    saveTasks();
-    skills=skills.filter(s=>s.id!==delSkillId);
-    if(activeSkill===delSkillId){activeSkill='';saveActive();}
-    saveSkills();closeDelM();renderSkills();renderTasks();S.renderSelect();
-    toast('Skill excluída permanentemente.','info');
-}
-function renderSkills(){
-    const grid=document.getElementById('sk-grid'),empty=document.getElementById('sk-empty');
-    if(skills.length===0){grid.innerHTML='';empty.style.display='block';return;}
-    empty.style.display='none';
-    grid.innerHTML=skills.map(s=>{
-        const lv=S.getLevel(s.xp),prog=S.progress(s.xp),cls=S.lvClass(lv);
-        const curXp=S.xpFor(lv),nxtXp=S.xpFor(lv+1),tc=S.taskCount(s.id);
-        const xpText=lv>0?(s.xp-curXp)+' / '+(nxtXp-curXp):s.xp+' / '+nxtXp;
-        return '<div class="skill-card '+cls+'">'+
-            '<div class="flex items-center justify-between mb-2">'+
-                '<span class="font-medium text-sm truncate">'+esc(s.name)+'</span>'+
-                '<span class="text-xs font-bold font-display px-1.5 py-0.5 rounded" style="background:var(--accent-d);color:var(--accent)">Lv.'+lv+'</span>'+
-            '</div>'+
-            '<div class="xp-bar mb-1.5"><div class="xp-fill" style="width:'+Math.round(prog*100)+'%"></div></div>'+
-            '<div class="flex justify-between mb-3"><span class="text-xs" style="color:var(--muted)">'+xpText+' XP</span><span class="text-xs" style="color:var(--muted)">'+tc+(tc===1?' tarefa':' tarefas')+'</span></div>'+
-            '<div class="flex gap-2">'+
-                '<button class="btn btn-s btn-sm flex-1 text-xs" onclick="openSkillModal(\''+s.id+'\')"><i class="fa-solid fa-pen" style="font-size:.6rem"></i> Editar</button>'+
-                '<button class="btn btn-g btn-sm flex-1 text-xs" onclick="openDelM(\''+s.id+'\')"><i class="fa-solid fa-trash" style="font-size:.6rem"></i> Excluir</button>'+
-            '</div>'+
-        '</div>';
-    }).join('');
-    S.renderSelect();
-}
+function execDelSkill(){if(!delSkillId)return;tasks.forEach(t=>{if(t.skillId===delSkillId)t.skillId=null;});saveTasks();skills=skills.filter(s=>s.id!==delSkillId);if(activeSkill===delSkillId){activeSkill='';saveActive();}saveSkills();closeDelM();renderSkills();renderTasks();S.renderSelect();toast('Skill excluída.','info');}
+function renderSkills(){const grid=document.getElementById('sk-grid'),empty=document.getElementById('sk-empty');if(skills.length===0){grid.innerHTML='';empty.style.display='block';return;}empty.style.display='none';grid.innerHTML=skills.map(s=>{const lv=S.getLevel(s.xp),prog=S.progress(s.xp),cls=S.lvClass(lv),curXp=S.xpFor(lv),nxtXp=S.xpFor(lv+1),tc=S.taskCount(s.id),xpText=lv>0?(s.xp-curXp)+' / '+(nxtXp-curXp):s.xp+' / '+nxtXp;return'<div class="skill-card '+cls+'"><div class="flex items-center justify-between mb-2"><span class="font-medium text-sm truncate">'+esc(s.name)+'</span><span class="text-xs font-bold font-display px-1.5 py-0.5 rounded" style="background:var(--accent-d);color:var(--accent)">Lv.'+lv+'</span></div><div class="xp-bar mb-1.5"><div class="xp-fill" style="width:'+Math.round(prog*100)+'%"></div></div><div class="flex justify-between mb-3"><span class="text-xs" style="color:var(--muted)">'+xpText+' XP</span><span class="text-xs" style="color:var(--muted)">'+tc+(tc===1?' tarefa':' tarefas')+'</span></div><div class="flex gap-2"><button class="btn btn-s btn-sm flex-1 text-xs" onclick="openSkillModal(\''+s.id+'\')"><i class="fa-solid fa-pen" style="font-size:.6rem"></i> Editar</button><button class="btn btn-g btn-sm flex-1 text-xs" onclick="openDelM(\''+s.id+'\')"><i class="fa-solid fa-trash" style="font-size:.6rem"></i> Excluir</button></div></div>';}).join('');S.renderSelect();}
 
-/* ================================================================
-   TAREFAS
-   ================================================================ */
-function addTask(){
-    const inp=document.getElementById('inp-t'),txt=inp.value.trim();
-    if(!txt){toast('Digite uma tarefa.','error');inp.focus();return;}
-    tasks.unshift({id:uid(),text:txt,skillId:activeSkill||null,done:false,doneAt:null});
-    inp.value='';saveTasks();renderTasks();toast('Tarefa adicionada.','success');
-}
+function addTask(){const inp=document.getElementById('inp-t'),txt=inp.value.trim();if(!txt){toast('Digite uma tarefa.','error');inp.focus();return;}tasks.unshift({id:uid(),text:txt,skillId:activeSkill||null,done:false,doneAt:null});inp.value='';saveTasks();renderTasks();toast('Tarefa adicionada.','success');}
 function togTask(id){const t=tasks.find(x=>x.id===id);if(t){t.done=!t.done;t.doneAt=t.done?new Date().toISOString():null;}saveTasks();renderTasks();}
 function delTask(id){tasks=tasks.filter(x=>x.id!==id);saveTasks();renderTasks();}
 function clearDone(){const n=tasks.filter(x=>x.done).length;if(!n)return;tasks=tasks.filter(x=>!x.done);saveTasks();renderTasks();toast(n+' tarefa(s) removida(s).','info');}
-function renderTasks(){
-    const list=document.getElementById('t-list'),empty=document.getElementById('t-empty'),clr=document.getElementById('btn-clr'),cnt=document.getElementById('t-cnt');
-    const dn=tasks.filter(x=>x.done).length;cnt.textContent=(tasks.length-dn)+'/'+tasks.length;clr.style.display=dn>0?'inline-flex':'none';
-    if(tasks.length===0){list.innerHTML='';empty.style.display='block';return;}
-    empty.style.display='none';
-    const sorted=tasks.slice().sort((a,b)=>(a.done===b.done?0:a.done?1:-1));
-    list.innerHTML=sorted.map(t=>{
-        const skTag=t.skillId?(()=>{const s=skills.find(x=>x.id===t.skillId);return s?'<span class="skill-tag">'+esc(s.name)+'</span>':'';})():'';
-        const ds=t.doneAt?'<span class="text-xs flex-shrink-0" style="color:var(--muted)">'+new Date(t.doneAt).toLocaleDateString('pt-BR',{day:'2-digit',month:'short'})+'</span>':'';
-        return '<div class="task-item'+(t.done?' done':'')+'">'+
-            '<div class="task-cb'+(t.done?' on':'')+'" onclick="togTask(\''+t.id+'\')" role="checkbox" aria-checked="'+t.done+'" tabindex="0">'+(t.done?'<i class="fa-solid fa-check"></i>':'')+'</div>'+
-            '<span class="task-text flex-1 text-sm leading-snug">'+esc(t.text)+'</span>'+skTag+ds+
-            '<button class="task-del btn btn-g" onclick="delTask(\''+t.id+'\')" aria-label="Deletar"><i class="fa-solid fa-xmark" style="font-size:.7rem"></i></button></div>';
-    }).join('');
-}
+function renderTasks(){const list=document.getElementById('t-list'),empty=document.getElementById('t-empty'),clr=document.getElementById('btn-clr'),cnt=document.getElementById('t-cnt');const dn=tasks.filter(x=>x.done).length;cnt.textContent=(tasks.length-dn)+'/'+tasks.length;clr.style.display=dn>0?'inline-flex':'none';if(tasks.length===0){list.innerHTML='';empty.style.display='block';return;}empty.style.display='none';const sorted=tasks.slice().sort((a,b)=>(a.done===b.done?0:a.done?1:-1));list.innerHTML=sorted.map(t=>{const skTag=t.skillId?(()=>{const s=skills.find(x=>x.id===t.skillId);return s?'<span class="skill-tag">'+esc(s.name)+'</span>':'';})():'';const ds=t.doneAt?'<span class="text-xs flex-shrink-0" style="color:var(--muted)">'+new Date(t.doneAt).toLocaleDateString('pt-BR',{day:'2-digit',month:'short'})+'</span>':'';return'<div class="task-item'+(t.done?' done':'')+'"><div class="task-cb'+(t.done?' on':'')+'" onclick="togTask(\''+t.id+'\')" role="checkbox" aria-checked="'+t.done+'" tabindex="0">'+(t.done?'<i class="fa-solid fa-check"></i>':'')+'</div><span class="task-text flex-1 text-sm leading-snug">'+esc(t.text)+'</span>'+skTag+ds+'<button class="task-del btn btn-g" onclick="delTask(\''+t.id+'\')" aria-label="Deletar"><i class="fa-solid fa-xmark" style="font-size:.7rem"></i></button></div>';}).join('');}
 
-/* ================================================================
-   STATS
-   ================================================================ */
-function renderStats(){
-    const days=l7(),chart=document.getElementById('st-chart'),totEl=document.getElementById('wk-total');
-    const vals=days.map(d=>daily[d.key]||0),maxV=Math.max(...vals,1),sum=vals.reduce((a,b)=>a+b,0);
-    totEl.textContent=fd(sum);
-    if(sum===0){chart.innerHTML='<div class="flex-1 flex items-center justify-center"><span class="text-sm" style="color:var(--muted)">Nenhum foco registrado esta semana</span></div>';return;}
-    chart.innerHTML=days.map((d,i)=>{const v=vals[i],hp=Math.max((v/maxV)*100,v>0?5:1.5),bg=d.today?'var(--accent)':'rgba(0,230,138,.35)',ls=d.today?'color:var(--accent);font-weight:600':'color:var(--muted)';
-    return '<div class="flex flex-col items-center gap-2 flex-1 min-w-0"><div class="sbar w-full" style="height:'+hp+'%;background:'+bg+'"><div class="sbar-tip">'+fd(v)+'</div></div><span class="text-xs truncate w-full text-center" style="'+ls+'">'+d.label+'</span></div>';}).join('');
-}
+function renderStats(){const days=l7(),chart=document.getElementById('st-chart'),totEl=document.getElementById('wk-total');const vals=days.map(d=>daily[d.key]||0),maxV=Math.max(...vals,1),sum=vals.reduce((a,b)=>a+b,0);totEl.textContent=fd(sum);if(sum===0){chart.innerHTML='<div class="flex-1 flex items-center justify-center"><span class="text-sm" style="color:var(--muted)">Nenhum foco registrado esta semana</span></div>';return;}chart.innerHTML=days.map((d,i)=>{const v=vals[i],hp=Math.max((v/maxV)*100,v>0?5:1.5),bg=d.today?'var(--accent)':'rgba(0,230,138,.35)',ls=d.today?'color:var(--accent);font-weight:600':'color:var(--muted)';return'<div class="flex flex-col items-center gap-2 flex-1 min-w-0"><div class="sbar w-full" style="height:'+hp+'%;background:'+bg+'"><div class="sbar-tip">'+fd(v)+'</div></div><span class="text-xs truncate w-full text-center" style="'+ls+'">'+d.label+'</span></div>';}).join('');}
 function resetSt(){if(!Object.keys(daily).length){toast('Nada para limpar.','info');return;}daily={};saveDaily();renderStats();toast('Estatísticas resetadas.','info');}
 
-/* ================================================================
-   ACESSIBILIDADE
-   ================================================================ */
 document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('task-cb')){e.preventDefault();e.target.click();}});
 
-/* ================================================================
-   INIT
-   ================================================================ */
-(function(){
-    const pg=document.getElementById('timer-prog');
-    pg.style.strokeDasharray=CIRC;pg.style.strokeDashoffset=CIRC;
-    checkSess();
-})();
+(function(){const pg=document.getElementById('timer-prog');pg.style.strokeDasharray=CIRC;pg.style.strokeDashoffset=CIRC;checkSess();})();
 </script>
 </body>
 </html>
