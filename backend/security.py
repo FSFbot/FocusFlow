@@ -1,5 +1,4 @@
-from fastapi import Depends, HTTPException
-from fastapi.security import OAuth2PasswordBearer
+from fastapi import Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 from jose import jwt, JWTError
 import os
@@ -7,12 +6,15 @@ import os
 from database import get_db
 from models import User
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 def get_current_user(
-    token: str = Depends(oauth2_scheme),
+    request: Request,
     db: Session = Depends(get_db)
 ) -> User:
+    token = request.cookies.get("access_token")
+    if not token:
+        raise HTTPException(status_code=401, detail="Não autenticado")
+
     try:
         payload = jwt.decode(
             token,

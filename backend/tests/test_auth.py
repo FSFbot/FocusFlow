@@ -6,7 +6,6 @@ from sqlalchemy.orm import sessionmaker
 from main import app
 from database import Base, get_db
 
-# ── Banco de dados exclusivo para testes ──────────────
 TEST_DATABASE_URL = "sqlite:///./test.db"
 
 engine = create_engine(TEST_DATABASE_URL, connect_args={"check_same_thread": False})
@@ -33,6 +32,7 @@ def setup_db():
 
 client = TestClient(app)
 
+
 # ── Testes ────────────────────────────────────────────
 
 def test_register_success():
@@ -41,7 +41,7 @@ def test_register_success():
         "password": "senha123"
     })
     assert response.status_code == 200
-    assert "access_token" in response.json()
+    assert "access_token" in response.cookies
 
 
 def test_register_duplicate_user():
@@ -67,7 +67,7 @@ def test_login_success():
         "password": "senha123"
     })
     assert response.status_code == 200
-    assert "access_token" in response.json()
+    assert "access_token" in response.cookies
 
 
 def test_login_wrong_password():
@@ -80,3 +80,16 @@ def test_login_wrong_password():
         "password": "senhaerrada"
     })
     assert response.status_code == 401
+
+
+def test_logout():
+    client.post("/auth/register", json={
+        "username": "testuser",
+        "password": "senha123"
+    })
+    client.post("/auth/login", data={
+        "username": "testuser",
+        "password": "senha123"
+    })
+    response = client.post("/auth/logout")
+    assert response.status_code == 200

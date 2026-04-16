@@ -1,14 +1,13 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response, Request
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from datetime import datetime, timedelta, timezone
-from jose import jwt
 import bcrypt
 import os
 
 from database import get_db
 from models import User
-from schemas import UserRegister, UserLogin, Token
+from schemas import UserRegister, Token
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -26,6 +25,7 @@ def create_token(username: str) -> str:
     expire = datetime.now(timezone.utc) + timedelta(
         minutes=int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 60))
     )
+    from jose import jwt
     return jwt.encode(
         {"sub": username, "exp": expire},
         os.getenv("SECRET_KEY"),
@@ -34,8 +34,8 @@ def create_token(username: str) -> str:
 
 # ── Rotas ─────────────────────────────────────────────
 
-@router.post("/register", response_model=Token)
-def register(data: UserRegister, db: Session = Depends(get_db)):
+@router.post("/register")
+def register(data: UserRegister, response: Response, db: Session = Depends(get_db)):
     existing = db.query(User).filter(User.username == data.username).first()
     if existing:
         raise HTTPException(status_code=400, detail="Usuário já existe")
@@ -46,13 +46,19 @@ def register(data: UserRegister, db: Session = Depends(get_db)):
     db.commit()
 
     token = create_token(data.username)
-    return {"access_token": token, "token_type": "bearer"}
+    response.set_cookie(
+        key="access_token",
+        value=token,
+        httponly=True,
+        max_age=3600,
+        samesite="lax"
+    )
+    return {"message": "Cadastro realizado com sucesso"}
 
 
-
-
-@router.post("/login", response_model=Token)
+@router.post("/login")
 def login(
+    response: Response,
     form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db)
 ):
@@ -61,4 +67,17 @@ def login(
         raise HTTPException(status_code=401, detail="Credenciais inválidas")
 
     token = create_token(user.username)
-    return {"access_token": token, "token_type": "bearer"}
+    response.set_cookie(
+        key="access_token",
+        value=token,
+        httponly=True,
+        max_age=3600,
+        samesite="lax"
+    )
+    return {"message": "Login realizado com sucesso"}
+
+
+@router.post("/logout")
+def logout(response: Response):
+    response.delete_cookie("access_token")
+    return {"message": "Logout realizado com sucesso"}
