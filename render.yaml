@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: focusflow-api
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALGORITHM
+        value: HS256
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: 60
+      - key: DATABASE_URL
+        value: sqlite:///./focusflow.db
+      - key: ALLOWED_ORIGINS
+        value: https://focus-flow-tau-navy.vercel.app
