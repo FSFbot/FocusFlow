@@ -51,7 +51,8 @@ def register(data: UserRegister, response: Response, db: Session = Depends(get_d
         value=token,
         httponly=True,
         max_age=3600,
-        samesite="lax"
+        samesite="none",
+        secure=True
     )
     return {"message": "Cadastro realizado com sucesso"}
 
@@ -72,7 +73,8 @@ def login(
         value=token,
         httponly=True,
         max_age=3600,
-        samesite="lax"
+        samesite="none",
+        secure=True
     )
     return {"message": "Login realizado com sucesso"}
 
