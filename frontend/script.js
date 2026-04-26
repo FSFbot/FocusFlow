@@ -438,7 +438,7 @@ function openSkillModal(id) {
     document.getElementById('m-sk-title').textContent = id ? 'Editar Skill' : 'Nova Skill';
     const inp = document.getElementById('m-sk-name');
     if (id) {
-        const s = skills.find(x => x.id === id);
+        const s = skills.find(x => x.id == id);
         inp.value = s ? s.name : '';
     } else {
         inp.value = '';
@@ -481,7 +481,7 @@ async function saveSkill() {
 
 function openDelM(id) {
     delSkillId = id;
-    const s = skills.find(x => x.id === id);
+    const s = skills.find(x => x.id == id);
     if (!s) return;
     document.getElementById('del-name').textContent = '"' + s.name + '"';
     document.getElementById('del-lv').textContent = S.getLevel(s.xp);
@@ -502,12 +502,12 @@ async function execDelSkill() {
     if (!delSkillId) return;
 
     try {
-        const affectedTasks = tasks.filter(t => t.skillId === delSkillId);
+        const affectedTasks = tasks.filter(t => t.skillId == delSkillId);
         await Promise.all(affectedTasks.map(t => api.updateTask(t.id, { skill_id: null })));
         affectedTasks.forEach(t => { t.skillId = null; });
 
         await api.deleteSkill(delSkillId);
-        skills = skills.filter(s => s.id !== delSkillId);
+        skills = skills.filter(s => s.id != delSkillId);
 
         if (activeSkill === delSkillId) activeSkill = '';
 
@@ -574,7 +574,7 @@ async function addTask() {
 }
 
 async function togTask(id) {
-    const t = tasks.find(x => x.id === id);
+    const t = tasks.find(x => x.id == id);
     if (!t) return;
 
     const newDone = !t.done;
@@ -599,7 +599,7 @@ async function togTask(id) {
 async function delTask(id) {
     try {
         await api.deleteTask(id);
-        tasks = tasks.filter(x => x.id !== id);
+        tasks = tasks.filter(x => x.id != id);
         renderTasks();
     } catch (e) {
         toast('Erro ao excluir tarefa.', 'error');
