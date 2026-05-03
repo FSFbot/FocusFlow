@@ -1,5 +1,10 @@
 // ── Constants ──────────────────────────────────────────────────────────────────
 const CIRC = 2 * Math.PI * 130;
+const BREAK_VIDEOS = {
+    cat:         ['J---aiyznGQ', 'QH2-TGUlwu4', '0Bmhjf0rKe8', 'xDIyAOBa_yU', 'iFr7U1cddFo'],
+    motivational:['ZXsQAXx_ao0', 'UF8uR6Z6KLc', 'g-jwWYX7Jlo', 'ji5_MqicxSo', 'Lp7E973zozc'],
+    funny:       ['dQw4w9WgXcQ', 'jNQXAC9IVRw', 'ABYnqp-bxvg', 'txqiwrbYGrs', 'fWNaR62BEtE']
+};
 
 // ── State ──────────────────────────────────────────────────────────────────────
 let tS = 'idle', tM = 'focus', tR = 0, tT = 0, tI = null;
@@ -282,7 +287,23 @@ function resetTm() {
     clearInterval(tI); tI = null;
     tS = 'idle'; tM = 'focus';
     tT = cfg.focusMin * 60; tR = tT;
+    closeBreakVideo();
     renderTimer(); applyTmTheme();
+}
+
+function openBreakVideo() {
+    const cats = Object.values(BREAK_VIDEOS);
+    const pool = cats[Math.floor(Math.random() * cats.length)];
+    const id = pool[Math.floor(Math.random() * pool.length)];
+    document.getElementById('break-video-iframe').src =
+        'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
+    document.getElementById('break-video-timer').textContent = ft(tR);
+    document.getElementById('m-break-video').style.display = 'flex';
+}
+
+function closeBreakVideo() {
+    document.getElementById('m-break-video').style.display = 'none';
+    document.getElementById('break-video-iframe').src = '';
 }
 
 function tick() {
@@ -327,7 +348,7 @@ async function onComplete() {
         }
 
         tM = 'break'; tT = cfg.breakMin * 60; tR = tT;
-        toast('Inicie o descanso.', 'success');
+        toast('Hora do descanso!', 'success');
     } else {
         tM = 'focus'; tT = cfg.focusMin * 60; tR = tT;
         toast('Descanso concluído!', 'info');
@@ -335,6 +356,8 @@ async function onComplete() {
 
     tS = 'paused';
     renderTimer(); applyTmTheme();
+    if (tM === 'break') { openBreakVideo(); startTm(); }
+    else { closeBreakVideo(); }
 }
 
 function renderTimer() {
@@ -365,6 +388,9 @@ function renderTimer() {
         : '<i class="fa-solid fa-play" style="font-size:.7rem"></i><span>Iniciar</span>';
 
     document.title = tS === 'running' ? ft(tR) + ' — FocusFlow' : 'FocusFlow';
+
+    const bvt = document.getElementById('break-video-timer');
+    if (bvt) bvt.textContent = ft(tR);
 }
 
 // ── Config ─────────────────────────────────────────────────────────────────────

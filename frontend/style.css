@@ -90,3 +90,10 @@ select.inp option{background-color:#0f0f16;color:#e8e8ef;padding:.5rem;}
 .fade-in{animation:fadeI .5s ease;}.auth-anim{animation:authIn .45s ease;}
 @media(max-width:640px){.timer-w svg{width:220px!important;height:220px!important;}#timer-display{font-size:2.5rem!important;}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
+.break-video-card{max-width:660px;width:100%;}
+.break-video-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1rem;}
+.break-video-timer-wrap{display:flex;flex-direction:column;gap:.15rem;}
+.break-video-timer-label{font-size:.72rem;color:var(--muted);}
+.break-video-timer-val{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:var(--brk);line-height:1;}
+.break-video-embed{border-radius:.75rem;overflow:hidden;position:relative;width:100%;padding-top:56.25%;background:#000;}
+.break-video-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:none;display:block;}

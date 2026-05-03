@@ -167,6 +167,20 @@
     <div class="flex gap-3"><button class="btn btn-s flex-1" onclick="closeDelM()">Cancelar</button><button class="btn btn-d flex-1" onclick="execDelSkill()"><i class="fa-solid fa-trash" style="font-size:.7rem"></i> Excluir permanentemente</button></div>
 </div>
 </div>
+<div id="m-break-video" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeBreakVideo()">
+<div class="modal-card break-video-card">
+    <div class="break-video-header">
+        <div class="break-video-timer-wrap">
+            <span class="break-video-timer-label">Descanso restante</span>
+            <span id="break-video-timer" class="break-video-timer-val">05:00</span>
+        </div>
+        <button class="btn btn-s" onclick="closeBreakVideo()"><i class="fa-solid fa-xmark" style="font-size:.7rem"></i> Fechar</button>
+    </div>
+    <div class="break-video-embed">
+        <iframe id="break-video-iframe" allowfullscreen allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+    </div>
+</div>
+</div>
 <script src="api.js"></script>
 <script src="script.js"></script>
 </body>
