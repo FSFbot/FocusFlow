@@ -1,10 +1,13 @@
 // ── Constants ──────────────────────────────────────────────────────────────────
 const CIRC = 2 * Math.PI * 130;
-const BREAK_VIDEOS = {
-    cat:         ['J---aiyznGQ', 'QH2-TGUlwu4', '0Bmhjf0rKe8', 'xDIyAOBa_yU', 'iFr7U1cddFo'],
-    motivational:['ZXsQAXx_ao0', 'UF8uR6Z6KLc', 'g-jwWYX7Jlo', 'ji5_MqicxSo', 'Lp7E973zozc'],
-    funny:       ['dQw4w9WgXcQ', 'jNQXAC9IVRw', 'ABYnqp-bxvg', 'txqiwrbYGrs', 'fWNaR62BEtE']
-};
+const BREAK_VIDEOS = [
+    // fireworks celebrations
+    't3Dq22QO1w0', '_R0H3wvfmcE', 'XCUk_9GQJI4', 'cdKop6NKAJA', 'Sdq2VzXpFPs',
+    // sports championship moments
+    'bq0HMYD2WAM', 'nMyn7QqWpWE', 'LFqULhS8OUg', 'dXR2-rGMjUU', 'eH0kW31kcv8',
+    // crowd celebrations and confetti
+    'YsRDpRpjHv0', 'j9XHZQK8eaY', '0pf0cB-pTGo', 'Hf_WOEMkD5c', '8CuKrg-CgLo'
+];
 
 // ── State ──────────────────────────────────────────────────────────────────────
 let tS = 'idle', tM = 'focus', tR = 0, tT = 0, tI = null;
@@ -292,9 +295,7 @@ function resetTm() {
 }
 
 function openBreakVideo() {
-    const cats = Object.values(BREAK_VIDEOS);
-    const pool = cats[Math.floor(Math.random() * cats.length)];
-    const id = pool[Math.floor(Math.random() * pool.length)];
+    const id = BREAK_VIDEOS[Math.floor(Math.random() * BREAK_VIDEOS.length)];
     document.getElementById('break-video-iframe').src =
         'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
     document.getElementById('break-video-timer').textContent = ft(tR);
