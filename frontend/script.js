@@ -1,16 +1,9 @@
 // ── Constants ──────────────────────────────────────────────────────────────────
 const CIRC = 2 * Math.PI * 130;
-const BREAK_VIDEOS = [
-    // fireworks celebrations (~1-3 min clips)
-    'A69pST5fFo0', 'cdKop6NKAJA', 'BgFJPp4F4e0', 'fqeB3XcuN7s', 'S0y3s4KP88g',
-    // sports championship moments (~1-4 min clips)
-    'lAIGb1lfpBw', 'jKDgFWKJFMk', 'e_X3QKQV5kI', '7yBPWMXkN0k', 'M7lc1UVf-VE',
-    // crowd celebrations and confetti (~1-3 min clips)
-    '4T1FRDlcJeA', 'vnvFjl3KMbM', 'k2KPgWWvYXE', 'GBZCzyfJGsM', 'OfDHFYzuAhk'
-];
 
 // ── State ──────────────────────────────────────────────────────────────────────
 let tS = 'idle', tM = 'focus', tR = 0, tT = 0, tI = null;
+let breakQuotesInterval = null, breakQuotesList = [], breakQuoteIdx = 0;
 let cfg = { focusMin: 25, breakMin: 5 };
 let tasks = [], daily = {}, skills = [], activeSkill = '', curUser = null;
 let editSkillId = null, delSkillId = null;
@@ -290,21 +283,51 @@ function resetTm() {
     clearInterval(tI); tI = null;
     tS = 'idle'; tM = 'focus';
     tT = cfg.focusMin * 60; tR = tT;
-    closeBreakVideo();
+    closeBreakQuotes();
     renderTimer(); applyTmTheme();
 }
 
-function openBreakVideo() {
-    const id = BREAK_VIDEOS[Math.floor(Math.random() * BREAK_VIDEOS.length)];
-    document.getElementById('break-video-iframe').src =
-        'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&end=300';
-    document.getElementById('break-video-timer').textContent = ft(tR);
-    document.getElementById('m-break-video').style.display = 'flex';
+function shuffleArr(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
 }
 
-function closeBreakVideo() {
-    document.getElementById('m-break-video').style.display = 'none';
-    document.getElementById('break-video-iframe').src = '';
+function showQuote(idx, animate) {
+    const q = breakQuotesList[idx];
+    const card = document.getElementById('break-quote-card');
+    if (animate) {
+        card.classList.add('fade-out');
+        setTimeout(() => {
+            document.getElementById('break-quote-text').textContent = q.text;
+            document.getElementById('break-quote-author').textContent = '— ' + q.author;
+            card.classList.remove('fade-out');
+        }, 400);
+    } else {
+        document.getElementById('break-quote-text').textContent = q.text;
+        document.getElementById('break-quote-author').textContent = '— ' + q.author;
+    }
+}
+
+function openBreakQuotes() {
+    breakQuotesList = shuffleArr(QUOTES);
+    breakQuoteIdx = 0;
+    document.getElementById('break-quotes-timer').textContent = ft(tR);
+    showQuote(0, false);
+    document.getElementById('m-break-quotes').style.display = 'flex';
+    breakQuotesInterval = setInterval(() => {
+        breakQuoteIdx = (breakQuoteIdx + 1) % breakQuotesList.length;
+        showQuote(breakQuoteIdx, true);
+    }, 60000);
+}
+
+function closeBreakQuotes() {
+    clearInterval(breakQuotesInterval);
+    breakQuotesInterval = null;
+    document.getElementById('m-break-quotes').style.display = 'none';
 }
 
 function tick() {
@@ -357,8 +380,8 @@ async function onComplete() {
 
     tS = 'paused';
     renderTimer(); applyTmTheme();
-    if (tM === 'break') { openBreakVideo(); startTm(); }
-    else { closeBreakVideo(); }
+    if (tM === 'break') { openBreakQuotes(); startTm(); }
+    else { closeBreakQuotes(); }
 }
 
 function renderTimer() {
@@ -390,8 +413,8 @@ function renderTimer() {
 
     document.title = tS === 'running' ? ft(tR) + ' — FocusFlow' : 'FocusFlow';
 
-    const bvt = document.getElementById('break-video-timer');
-    if (bvt) bvt.textContent = ft(tR);
+    const bqt = document.getElementById('break-quotes-timer');
+    if (bqt) bqt.textContent = ft(tR);
 }
 
 // ── Config ─────────────────────────────────────────────────────────────────────

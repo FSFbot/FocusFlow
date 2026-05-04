@@ -90,10 +90,14 @@ select.inp option{background-color:#0f0f16;color:#e8e8ef;padding:.5rem;}
 .fade-in{animation:fadeI .5s ease;}.auth-anim{animation:authIn .45s ease;}
 @media(max-width:640px){.timer-w svg{width:220px!important;height:220px!important;}#timer-display{font-size:2.5rem!important;}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
-.break-video-card{max-width:660px;width:100%;}
-.break-video-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1rem;}
-.break-video-timer-wrap{display:flex;flex-direction:column;gap:.15rem;}
-.break-video-timer-label{font-size:.72rem;color:var(--muted);}
-.break-video-timer-val{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:var(--brk);line-height:1;}
-.break-video-embed{border-radius:.75rem;overflow:hidden;position:relative;width:100%;padding-top:56.25%;background:#000;}
-.break-video-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:none;display:block;}
+.break-quotes-card{max-width:540px;width:100%;}
+.break-quotes-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.5rem;}
+.break-quotes-timer-wrap{display:flex;flex-direction:column;gap:.15rem;}
+.break-quotes-timer-label{font-size:.72rem;color:var(--muted);}
+.break-quotes-timer-val{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:var(--brk);line-height:1;}
+.break-quote-body{display:flex;align-items:center;justify-content:center;padding:.5rem 0 1rem;}
+.break-quote-card{text-align:center;padding:2rem 2.5rem;border-radius:1rem;background:var(--accent-d);border:1px solid rgba(0,230,138,.12);width:100%;transition:opacity .4s ease;}
+.break-quote-card.fade-out{opacity:0;}
+.break-quote-icon{font-size:3.5rem;line-height:1;color:var(--accent);opacity:.3;margin-bottom:.25rem;font-family:Georgia,serif;font-weight:700;}
+.break-quote-text{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:600;line-height:1.65;color:var(--fg);margin-bottom:1.25rem;}
+.break-quote-author{font-size:.78rem;color:var(--brk);font-weight:600;letter-spacing:.07em;text-transform:uppercase;}
